@@ -1,0 +1,136 @@
+[gd_scene load_steps=15 format=3 uid="uid://dvd13lgeaxxbp"]
+
+[ext_resource type="Script" path="res://StartScreen.gd" id="1_eonea"]
+[ext_resource type="Script" path="res://player.gd" id="1_nk3y8"]
+[ext_resource type="Script" path="res://WallGenerator.gd" id="2_mah32"]
+[ext_resource type="Script" path="res://StartZoomAnimation.gd" id="4_na7iw"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_obbjg"]
+sky_top_color = Color(0.466667, 0.541176, 0.639216, 1)
+sky_horizon_color = Color(0.65098, 0.662745, 0.682353, 1)
+ground_bottom_color = Color(0.137255, 0.113725, 0.0862745, 1)
+ground_horizon_color = Color(0.65098, 0.662745, 0.682353, 1)
+
+[sub_resource type="Sky" id="Sky_pfol3"]
+sky_material = SubResource("ProceduralSkyMaterial_obbjg")
+
+[sub_resource type="Environment" id="Environment_7rl8n"]
+background_mode = 2
+sky = SubResource("Sky_pfol3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q3tq7"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cvwpp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tp2ku"]
+size = Vector2(100, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3gs6u"]
+size = Vector3(9.174, 0.047, 1.985)
+
+[sub_resource type="Animation" id="Animation_u23eg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StartLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ni6ys"]
+resource_name = "StartZoomer"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StartLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rcugq"]
+_data = {
+"RESET": SubResource("Animation_u23eg"),
+"StartZoomer": SubResource("Animation_ni6ys")
+}
+
+[node name="MainScene" type="Node3D"]
+script = ExtResource("1_eonea")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7rl8n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_energy = 0.7
+shadow_enabled = true
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.6, 0)
+script = ExtResource("1_nk3y8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_q3tq7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_cvwpp")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(2, 0, 0, 0, 1.92348, 0.547918, 0, -0.547918, 1.92348, 0, 1.324, 1.715)
+doppler_tracking = 2
+fov = 86.0
+
+[node name="Floor_0" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-09, 0, 1, 0, 1, 0, -0.05, 0, -4.37114e-08, 0, 0, -1.898)
+mesh = SubResource("PlaneMesh_tp2ku")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor_0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor_0/StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 4.087, -0.018, 0.003)
+shape = SubResource("BoxShape3D_3gs6u")
+
+[node name="WallGenerator" type="Node3D" parent="."]
+script = ExtResource("2_mah32")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StartLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = -29.0
+offset_right = 99.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.20944
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 35
+text = "Tap To Play!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_rcugq")
+}
+speed_scale = 1.5
+script = ExtResource("4_na7iw")
