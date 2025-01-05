@@ -1,7 +1,7 @@
 extends Node3D
 
 var _gameStarted = false
-var _startLabel : Label
+var _startLabel: Label
 var _player
 
 # Called when the node enters the scene tree for the first time.
@@ -19,7 +19,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if _gameStarted:
 		return
-	if Input.is_action_just_pressed("ui_accept") or (event is InputEventScreenTouch and event.is_pressed()):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		StartGame()
+	elif event is InputEventScreenTouch and event.is_pressed():
 		StartGame()
 
 func StartGame():
