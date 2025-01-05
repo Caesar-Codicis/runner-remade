@@ -28,16 +28,17 @@ func StartRunning():
 
 func _physics_process(delta):
 	var playerVelocity = Vector3.ZERO
+	playerVelocity = velocity
 	
 	if not startedRunning:
 		return
 	
 	if isRunningAutomatically:
-		velocity.z = -3.0
-		velocity.y += GRAVITY * delta
-		playerVelocity = velocity
+		playerVelocity.z = -3.0
+		playerVelocity.y += GRAVITY * delta
+		velocity = playerVelocity
 		
-		move_and_slide()	
+		move_and_slide()
 		
 		if global_position.z <= INITIALZ:
 			print("We should stop running")
@@ -49,10 +50,10 @@ func _physics_process(delta):
 	if not isOnLeftWall and not isOnRightWall:
 		if not jumping:
 			playerVelocity.y += GRAVITY * delta
-			playerVelocity.z = -(PLAYERSPEED -0.5)
+			playerVelocity.z = -(PLAYERSPEED - 0.5)
 	
 	if not jumping:
-		playerVelocity = self.velocity
+		self.velocity = playerVelocity
 	else:
 		if global_position.y > 1.5 or global_position.y < 0.1:
 			jumping = false
@@ -74,7 +75,7 @@ func HandleWallStickOrJump(delta):
 		else:
 			if not hasReachedWall:
 				var directionToWall = (wallStickPosition - global_position).normalized()
-				var PlayerVelocity = directionToWall * (PLAYERSPEED +1.5)
+				var PlayerVelocity = directionToWall * (PLAYERSPEED + 1.5)
 				## apply gravity?
 				self.velocity = PlayerVelocity
 				self.velocity.y = GRAVITY * delta
@@ -116,7 +117,7 @@ func GetDistanceToNextWall():
 	return abs(distance)
 
 func GetTimeInAir():
-	var timeInAir = (2*JUMPVELOCITY) / -GRAVITY
+	var timeInAir = (2 * JUMPVELOCITY) / -GRAVITY
 	return timeInAir
 
 func CalculateRequiredForwardVelocity(distance, timeInAir):
@@ -126,20 +127,20 @@ func GetNextWallZPosition():
 	
 	var spaceState = get_world_3d().direct_space_state
 	
-	var rayDirection = Vector3(0,0,-1)
+	var rayDirection = Vector3(0, 0, -1)
 	
 	if isOnLeftWall:
 		## cast ray forward and to the right
-		rayDirection = Vector3(1,0,-1).normalized()
+		rayDirection = Vector3(1, 0, -1).normalized()
 	elif isOnRightWall:
 		## cast ray forward and to the left
-		rayDirection = Vector3(-1,0,-1).normalized()
+		rayDirection = Vector3(-1, 0, -1).normalized()
 	else:
 		## if not on any wall cast ray directly forward
-		rayDirection = Vector3(0,0,-1)
+		rayDirection = Vector3(0, 0, -1)
 	
 	var rayLength = 1.2
-	var rayOrigin = global_position + Vector3(0,0,-0.75)
+	var rayOrigin = global_position + Vector3(0, 0, -0.75)
 	var rayEnd = rayOrigin + rayDirection * rayLength
 	var rayQuery = PhysicsRayQueryParameters3D.new()
 	rayQuery.from = rayOrigin
@@ -182,7 +183,7 @@ func ApplyJump():
 	print("Time in air: ", timeInAir)
 	
 	## calculate the required forward velocity
-	var requiredForwardVelocity = CalculateRequiredForwardVelocity(distanceToNextWall,timeInAir)
+	var requiredForwardVelocity = CalculateRequiredForwardVelocity(distanceToNextWall, timeInAir)
 	print("Required forward velocity: ", requiredForwardVelocity)
 	
 	## limit forward velocity
@@ -281,9 +282,9 @@ func CheckForNearbyWall():
 	if jumpedOnFirstWall:
 		rayLength = 1.0
 	
-	var rayOrigin = global_position + Vector3(0,0,0)
-	var leftDirection = Vector3(-1,0,-1).normalized() ## Left-forward
-	var rightDirection = Vector3(1,0,-1).normalized() ## Right-forward
+	var rayOrigin = global_position + Vector3(0, 0, 0)
+	var leftDirection = Vector3(-1, 0, -1).normalized() ## Left-forward
+	var rightDirection = Vector3(1, 0, -1).normalized() ## Right-forward
 	
 	var leftRayTo = rayOrigin + leftDirection * rayLength
 	var rightRayTo = rayOrigin + rightDirection * rayLength
@@ -363,9 +364,7 @@ func AttachToWall(wall: Node3D, isLeftWall: bool):
 	else:
 		targetXPosition = wall.global_position.x - wallHalfWidth - playerHalfWidth - 0.1
 	
-	var  targetPosition = Vector3(targetXPosition, clampedY, global_position.z)
+	var targetPosition = Vector3(targetXPosition, clampedY, global_position.z)
 	
 	JumpToWall(targetPosition)
 	hasReachedWall = false
-	
-	
