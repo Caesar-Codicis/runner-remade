@@ -16,15 +16,15 @@ func _ready() -> void:
 
 func StartGenerating():
 	for i in range(1250):
-		GenerateSimpleWalls()
+		GenerateSimpleWalls(i)
 
-func GenerateSimpleWalls():
+func GenerateSimpleWalls(n):
 	## simple left wall
 	
 	if leftWallScene != null:
 		var leftWall = leftWallScene.instantiate() as MeshInstance3D
 		var leftWallY = GetRandomY()
-		var positionZ = randf_range(2.0,5.25)
+		var positionZ = randf_range(3.5,3.5+(5.25-3.5)*(1/(n+1)))
 		if simpleWallCount == 1:
 			leftWallY = 1.0
 			positionZ = 4.5
@@ -43,7 +43,7 @@ func GenerateSimpleWalls():
 	
 	if rightWallScene != null:
 		var rightWall = rightWallScene.instantiate() as MeshInstance3D
-		var positionZ = randf_range(2.25,5.25)
+		var positionZ = randf_range(3.5,3.5+(5.25-3.5)*(1/(n+1)))
 		var rightWallY = GetRandomY()
 		rightWall.position = Vector3(0.75, rightWallY, nextRightWallPositionZ)
 		var CurrentScale = rightWall.scale

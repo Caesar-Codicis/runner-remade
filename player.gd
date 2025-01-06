@@ -77,11 +77,6 @@ func HandleWallStickOrJump(delta):
 			if not hasReachedWall:
 				var directionToWall = (wallStickPosition - global_position).normalized()
 				velocity = directionToWall * (PLAYERSPEED + 1.5)
-				## apply gravity?
-				var playerVelocity = velocity
-				playerVelocity.y += GRAVITY * delta
-				
-				velocity = velocity
 				
 				move_and_slide()
 				

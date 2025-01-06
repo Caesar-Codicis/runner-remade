@@ -6,7 +6,7 @@ var _player
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Engine.time_scale = 0.1
+	# Engine.time_scale = 1 ## debugging tool for controlling speed of playback
 	_startLabel = $CanvasLayer/StartLabel
 	_startLabel.visible = true
 	
