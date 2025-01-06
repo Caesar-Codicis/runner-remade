@@ -23,6 +23,8 @@ var wallStickPosition = Vector3.ZERO
 var lastWallExitPosition = Vector3.ZERO
 var currentWall: Node3D
 
+signal success_attach
+
 func StartRunning():
 	startedRunning = true
 
@@ -340,7 +342,7 @@ func FallIntoVoid():
 
 func AttachToWall(wall: Node3D, isLeftWall: bool):
 	## figure out print later
-	
+	emit_signal("success_attach")
 	currentWall = wall
 	isTouchingWall = true
 	isOnLeftWall = isLeftWall

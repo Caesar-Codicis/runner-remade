@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvd13lgeaxxbp"]
+[gd_scene load_steps=17 format=3 uid="uid://dvd13lgeaxxbp"]
 
 [ext_resource type="Script" path="res://StartScreen.gd" id="1_eonea"]
 [ext_resource type="Script" path="res://player.gd" id="1_nk3y8"]
 [ext_resource type="Script" path="res://WallGenerator.gd" id="2_mah32"]
 [ext_resource type="Script" path="res://StartZoomAnimation.gd" id="4_na7iw"]
+[ext_resource type="AudioStream" uid="uid://b4t6p7fc5l15i" path="res://pickupCoin.wav" id="5_2ye8g"]
+[ext_resource type="Script" path="res://attach sound.gd" id="6_aqjjr"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_obbjg"]
 sky_top_color = Color(0.466667, 0.541176, 0.639216, 1)
@@ -134,3 +136,9 @@ libraries = {
 }
 speed_scale = 1.5
 script = ExtResource("4_na7iw")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_2ye8g")
+script = ExtResource("6_aqjjr")
+
+[connection signal="success_attach" from="Player" to="AudioStreamPlayer" method="_on_player_success_attach"]
