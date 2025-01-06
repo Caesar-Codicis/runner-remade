@@ -3,10 +3,16 @@ extends Node3D
 var _gameStarted = false
 var _startLabel: Label
 var _player
+var _ui
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Engine.time_scale = 1 ## debugging tool for controlling speed of playback
+
+	var ui_scene = load("res://ui.tscn")
+	_ui = ui_scene.instance()
+	add_child(_ui)
+
 	_startLabel = $CanvasLayer/StartLabel
 	_startLabel.visible = true
 	

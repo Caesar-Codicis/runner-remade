@@ -1,34 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvki1xiuhg3mf"]
+[gd_scene load_steps=3 format=3 uid="uid://bvki1xiuhg3mf"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vf1bx"]
-bg_color = Color(0.254902, 0.788235, 0.886275, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 0.356863)
-border_blend = true
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-corner_detail = 15
-shadow_color = Color(0, 0, 0, 0.176471)
-shadow_size = 1
-anti_aliasing_size = 0.25
+[ext_resource type="Script" path="res://ui.gd" id="1_hba0q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v1qvu"]
+bg_color = Color(0.111197, 0.111197, 0.111197, 1)
 
 [node name="Ui" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 11.0
+offset_right = -857.0
+offset_bottom = -558.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hba0q")
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-offset_left = 17.0
-offset_top = 17.0
-offset_right = 291.0
-offset_bottom = 84.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_vf1bx")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 298.0
+offset_bottom = 83.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v1qvu")
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 93.0
+offset_top = 24.0
+offset_right = 203.0
+offset_bottom = 74.0
+pivot_offset = Vector2(3, 24)
+theme_override_font_sizes/font_size = 34
+text = "faggot"

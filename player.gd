@@ -8,6 +8,8 @@ const INITIALZ = -3.75
 const HORIZONTALJUMPSPEED = 4.0
 const MAXFORWARDVELOCITY = 2.5
 
+var _ui
+var score = 0
 var isOnLeftWall = false
 var isOnRightWall = false
 var isTouchingWall = false
@@ -27,6 +29,8 @@ signal success_attach
 
 func StartRunning():
 	startedRunning = true
+	var main_scene = get_tree().root.get_node("MainScene")
+	_ui = main_scene._ui
 
 func _physics_process(delta):
 	var playerVelocity = Vector3.ZERO
@@ -79,6 +83,11 @@ func HandleWallStickOrJump(delta):
 			if not hasReachedWall:
 				var directionToWall = (wallStickPosition - global_position).normalized()
 				velocity = directionToWall * (PLAYERSPEED + 1.5)
+				## apply gravity?
+				#var playerVelocity = velocity
+				#playerVelocity.y += GRAVITY * delta
+				#
+				#velocity = playerVelocity
 				
 				move_and_slide()
 				
@@ -91,6 +100,9 @@ func HandleWallStickOrJump(delta):
 					
 					hasReachedWall = true
 					print("hasReachedWall")
+					score += 1
+					print("Score: ", score)
+					_ui.updateScore(score)
 			else:
 				print("we reached wall")
 				
