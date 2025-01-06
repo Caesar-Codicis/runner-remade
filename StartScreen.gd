@@ -6,6 +6,7 @@ var _player
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Engine.time_scale = 0.1
 	_startLabel = $CanvasLayer/StartLabel
 	_startLabel.visible = true
 	

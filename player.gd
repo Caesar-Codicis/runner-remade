@@ -61,6 +61,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func HandleWallStickOrJump(delta):
+	
 	if isTouchOrMousePressed():
 		if not isTouchingWall:
 			print("Checking for wall")
@@ -75,12 +76,12 @@ func HandleWallStickOrJump(delta):
 		else:
 			if not hasReachedWall:
 				var directionToWall = (wallStickPosition - global_position).normalized()
-				var PlayerVelocity = directionToWall * (PLAYERSPEED + 1.5)
+				velocity = directionToWall * (PLAYERSPEED + 1.5)
 				## apply gravity?
-				self.velocity = PlayerVelocity
-				self.velocity.y = GRAVITY * delta
+				var playerVelocity = velocity
+				playerVelocity.y += GRAVITY * delta
 				
-				PlayerVelocity = PlayerVelocity
+				velocity = velocity
 				
 				move_and_slide()
 				
@@ -89,7 +90,7 @@ func HandleWallStickOrJump(delta):
 					global_position = wallStickPosition
 					
 					## reset vel
-					PlayerVelocity = Vector3.ZERO
+					velocity = Vector3.ZERO
 					
 					hasReachedWall = true
 					print("hasReachedWall")
@@ -324,8 +325,8 @@ func CheckForNearbyWall():
 					if not jumpedOnFirstWall:
 						jumpedOnFirstWall = true
 					jumping = false
-					lastPointerState = 1
-					AttachToWall(colliderParent, true)
+					lastPointerState = 2
+					AttachToWall(colliderParent, false)
 					foundWall = true
 	
 	if not foundWall:
