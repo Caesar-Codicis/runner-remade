@@ -10,7 +10,7 @@ func _ready() -> void:
 	# Engine.time_scale = 1 ## debugging tool for controlling speed of playback
 
 	var ui_scene = load("res://ui.tscn")
-	_ui = ui_scene.instance()
+	_ui = ui_scene.instantiate()
 	add_child(_ui)
 
 	_startLabel = $CanvasLayer/StartLabel
