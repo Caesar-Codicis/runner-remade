@@ -5,6 +5,8 @@ const PLAYERSPEED = 2.5
 const GRAVITY = -9.8
 const JUMPVELOCITY = 1.15
 const INITIALZ = -3.75
+var INITIALY = position.y
+var INITIALX = position.x
 const HORIZONTALJUMPSPEED = 4.0
 const MAXFORWARDVELOCITY = 2.5
 
@@ -33,6 +35,7 @@ func StartRunning():
 	_ui = main_scene._ui
 
 func _physics_process(delta):
+	
 	var playerVelocity = Vector3.ZERO
 	playerVelocity = velocity
 	
@@ -59,12 +62,15 @@ func _physics_process(delta):
 			playerVelocity.z = -(PLAYERSPEED - 0.5)
 	
 	if not jumping:
-		self.velocity = playerVelocity
+		velocity = playerVelocity
 	else:
 		if global_position.y > 1.5 or global_position.y < 0.1:
 			jumping = false
 	
 	move_and_slide()
+	
+	ExitConditions()
+	
 
 func HandleWallStickOrJump(delta):
 	
@@ -169,7 +175,7 @@ func GetNextWallZPosition():
 func ApplyJump():
 	print("Jumping")
 	jumping = true
-	var jumpVelocity = self.velocity ## Check this statement in partular, unclear what is meant by capital Velocity
+	var jumpVelocity = velocity
 	
 	## Apply upward velocity
 	jumpVelocity.y = JUMPVELOCITY
@@ -203,7 +209,7 @@ func ApplyJump():
 	## set the forward z velo
 	jumpVelocity.z = -requiredForwardVelocity
 	
-	self.velocity = jumpVelocity
+	velocity = jumpVelocity
 
 func GetVerticalMovement():
 	var verticalMovement = global_position.y
@@ -378,3 +384,16 @@ func AttachToWall(wall: Node3D, isLeftWall: bool):
 	
 	JumpToWall(targetPosition)
 	hasReachedWall = false
+
+
+func ExitConditions():
+	if pow(position.x,2) > pow(INITIALX+2,2):
+		self.process_mode = Node.PROCESS_MODE_PAUSABLE
+		get_tree().paused = true
+		print("too far out", get_tree().paused)
+	elif position.y < INITIALY - 9.0:
+		self.process_mode = Node.PROCESS_MODE_PAUSABLE
+		get_tree().paused = true
+		print("fell off", get_tree().paused)
+	else:
+		return
