@@ -142,4 +142,5 @@ script = ExtResource("4_na7iw")
 stream = ExtResource("5_2ye8g")
 script = ExtResource("6_aqjjr")
 
+[connection signal="failure_happened" from="Player" to="." method="_on_player_failure_happened"]
 [connection signal="success_attach" from="Player" to="AudioStreamPlayer" method="_on_player_success_attach"]

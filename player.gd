@@ -28,6 +28,7 @@ var lastWallExitPosition = Vector3.ZERO
 var currentWall: Node3D
 
 signal success_attach
+signal failure_happened
 
 func StartRunning():
 	startedRunning = true
@@ -390,10 +391,12 @@ func ExitConditions():
 	if pow(position.x,2) > pow(INITIALX+2,2):
 		self.process_mode = Node.PROCESS_MODE_PAUSABLE
 		get_tree().paused = true
-		print("too far out", get_tree().paused)
+		print("too far out")
+		emit_signal("failure_happened") 
 	elif position.y < INITIALY - 9.0:
 		self.process_mode = Node.PROCESS_MODE_PAUSABLE
 		get_tree().paused = true
-		print("fell off", get_tree().paused)
+		print("fell off")
+		emit_signal("failure_happened")
 	else:
 		return

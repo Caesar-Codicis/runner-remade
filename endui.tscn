@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://by60j7hmyn46"]
+
+[ext_resource type="Script" path="res://endui.gd" id="1_s3n2b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0thuj"]
+bg_color = Color(0.111197, 0.111197, 0.111197, 1)
+
+[node name="Endui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s3n2b")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+color = Color(0, 0, 0, 0.286275)
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+visible = false
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 298.0
+offset_bottom = 83.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0thuj")
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 93.0
+offset_top = 24.0
+offset_right = 203.0
+offset_bottom = 74.0
+pivot_offset = Vector2(3, 24)
+theme_override_font_sizes/font_size = 34
+text = "faggot"
+
+[node name="Highpanel" type="Panel" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 298.0
+offset_bottom = 83.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0thuj")
+
+[node name="Highlabel" type="Label" parent="CanvasLayer"]
+offset_left = 93.0
+offset_top = 24.0
+offset_right = 203.0
+offset_bottom = 74.0
+pivot_offset = Vector2(3, 24)
+theme_override_font_sizes/font_size = 34
+text = "faggot"

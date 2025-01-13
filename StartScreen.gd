@@ -4,6 +4,7 @@ var _gameStarted = false
 var _startLabel: Label
 var _player
 var _ui
+var _endui
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,6 +22,7 @@ func _ready() -> void:
 	_player = $Player
 	
 	get_tree().paused = true ## pauses
+	
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -37,3 +39,9 @@ func StartGame():
 	get_tree().paused = false
 	$Player.StartRunning()
 	$WallGenerator.StartGenerating()
+
+
+func _on_player_failure_happened() -> void:
+	var end_scene = load("res://endui.tscn")
+	_endui = end_scene.instantiate()
+	add_child(_endui)
